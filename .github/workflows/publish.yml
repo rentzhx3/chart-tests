@@ -4,7 +4,8 @@ on:
     branches:
       - v3
 jobs:
-  Publish:
+  publish:
+    environment: build
     runs-on: ubuntu-latest
     steps:
       - name: checkout pages branch
@@ -27,6 +28,9 @@ jobs:
           cache: 'npm'
           cache-dependency-path: temp/package-lock.json
       - name: install && build
+        env:
+          VITE_GANALYTICS_ID: ${{secrets.VITE_GANALYTICS_ID}}
+          VITE_DISQUS_SHORT_NAME: ${{secrets.VITE_DISQUS_SHORT_NAME}}
         run: |
           cd temp
           npm install
